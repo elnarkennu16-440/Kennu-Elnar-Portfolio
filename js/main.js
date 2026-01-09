@@ -4,70 +4,39 @@ AOS.init({
   duration: 800
 });
 
-// Typing Animation for Hero Section with proper word wrapping
+// Typing Animation for Hero Section with proper formatting
 document.addEventListener('DOMContentLoaded', function() {
   const typingText = document.querySelector('.typing-text');
   if (typingText) {
-    const text = "An Undergraduate BSIS student at Camarines Norte State College. Aspiring QA tester in the IT industry — passionate about testing, automation, and delivering reliable software experiences.";
-    
-    // Split text into words for proper wrapping
-    const words = text.split(' ');
-    let wordIndex = 0;
+    const text = "A BSIS student from Camarines Norte State College.\nI'm interested in how software and systems are designed and improved.\nI value accuracy, continuous learning, and doing my best in every project I take on.";
+
     let charIndex = 0;
-    let currentWord = '';
-    let isDelaying = false;
-    
+    let isTyping = true;
+
     function type() {
-      if (wordIndex >= words.length) {
+      if (charIndex < text.length) {
+        typingText.textContent = text.substring(0, charIndex + 1);
+        charIndex++;
+
+        // Add pause for punctuation
+        const currentChar = text[charIndex - 1];
+        const nextChar = text[charIndex];
+        let delay = 50;
+
+        if (currentChar === '.' || currentChar === '!' || currentChar === '?') {
+          delay = 400;
+        } else if (currentChar === ',' || currentChar === ';') {
+          delay = 200;
+        }
+
+        setTimeout(type, delay);
+      } else {
         // Typing complete - hide cursor
         typingText.classList.add('typing-done');
-        return;
-      }
-      
-      if (!isDelaying) {
-        currentWord = words[wordIndex];
-        charIndex++;
-        
-        // Build displayed text with proper spacing
-        let displayText = '';
-        for (let i = 0; i <= wordIndex; i++) {
-          displayText += words[i] + (i < words.length - 1 ? ' ' : '');
-        }
-        
-        typingText.textContent = displayText;
-        
-        // Check if we need to break to next line (for long text)
-        if (typingText.scrollWidth > typingText.clientWidth || 
-            typingText.getBoundingClientRect().height > 60) {
-          // Add line break before current word
-          displayText = '';
-          for (let i = 0; i < wordIndex; i++) {
-            displayText += words[i] + ' ';
-          }
-          displayText += '\n' + currentWord;
-          typingText.textContent = displayText;
-        }
-        
-        // Check if current word is complete
-        if (charIndex >= currentWord.length) {
-          wordIndex++;
-          charIndex = 0;
-          
-          // Check for punctuation pauses
-          const punctuation = currentWord.match(/[.,;!?]$/);
-          isDelaying = true;
-          const delay = punctuation ? (punctuation[0] === '.' ? 400 : 200) : 50;
-          
-          setTimeout(() => {
-            isDelaying = false;
-            type();
-          }, delay);
-        } else {
-          setTimeout(type, 50);
-        }
+        isTyping = false;
       }
     }
-    
+
     // Start typing after a short delay
     setTimeout(type, 800);
   }
