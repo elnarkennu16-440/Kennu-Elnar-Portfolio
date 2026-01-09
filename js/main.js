@@ -184,28 +184,28 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Contact form handler with PHP backend
+// Contact form handler for Netlify forms
 document.getElementById('contactForm')?.addEventListener('submit', function(e){
   e.preventDefault();
   const status = document.getElementById('contactStatus');
   status.textContent = 'Sending...';
 
-  // Create FormData from the form
+  // For Netlify forms, we can use the built-in handling
+  // The form will be submitted to Netlify automatically
   const formData = new FormData(this);
 
-  // Send data to PHP script (using fallback for now)
-  fetch('send_email_fallback.php', {
+  // Submit to Netlify's form handling endpoint
+  fetch(window.location.href, {
     method: 'POST',
-    body: formData
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams(formData).toString()
   })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
+  .then(response => {
+    if (response.ok) {
       status.textContent = 'Message sent — thank you!';
       e.target.reset();
     } else {
-      status.textContent = data.message || 'Failed to send message. Please try again.';
-      console.log('Server response:', data); // Debug info
+      status.textContent = 'Failed to send message. Please try again.';
     }
   })
   .catch(error => {
