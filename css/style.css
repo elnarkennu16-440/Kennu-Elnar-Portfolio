@@ -124,6 +124,28 @@ body{
 .skill-item h6{margin:0 0 6px 0; font-weight:600; color:#630000}
 .skill-item p{margin:0; color:#666; font-size:0.95rem}
 
+/* Skill tags - inline skill display */
+.skill-tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.skill-tag{
+  display: inline-block;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.skill-tag:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(99,0,0,0.3);
+}
+
 /* projects */
 .project-card{
   border-radius:12px; overflow:hidden; background:#fff; box-shadow: 0 20px 40px rgba(9,9,22,0.06);
@@ -204,3 +226,4 @@ body{
   .accordion-body .row {flex-direction: column}
   .project-screenshot img {max-height: 200px}
 }
+

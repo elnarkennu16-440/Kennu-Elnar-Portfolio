@@ -37,24 +37,9 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e){
 // Set copyright year
 document.getElementById('copyYear').textContent = new Date().getFullYear();
 
-// Animate progress bars on scroll
-function animateProgressBars() {
-  const progressBars = document.querySelectorAll('.progress-bar');
-  progressBars.forEach(bar => {
-    const rect = bar.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
-      const width = bar.style.width;
-      bar.style.width = '0%';
-      setTimeout(() => {
-        bar.style.transition = 'width 1.5s ease';
-        bar.style.width = width;
-      }, 100);
-    }
-  });
-}
 
-window.addEventListener('scroll', animateProgressBars);
-window.addEventListener('load', animateProgressBars);
+
+
 
 
 
