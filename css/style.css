@@ -280,3 +280,57 @@ body{
   .project-screenshot img {max-height: 200px}
 }
 
+/* Custom accordion button styles - Pure CSS, no Bootstrap JS dependency */
+.custom-accordion-btn {
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  border: none;
+  padding: 1rem 1.25rem;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.custom-accordion-btn:hover {
+  background-color: #f8f9fa;
+}
+
+.custom-accordion-btn .accordion-icon {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.custom-accordion-btn:not(.collapsed) .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.custom-accordion-btn:not(.collapsed) {
+  background-color: #e7f1ff;
+  color: #0c63e4;
+}
+
+/* Custom collapse styles - controlled via collapsed class */
+.custom-collapse {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.custom-collapse:not(.collapsed) {
+  max-height: 2000px;
+}
+
+.accordion-item {
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.accordion-item:first-child {
+  border-top: none;
+}
+
+

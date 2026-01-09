@@ -112,39 +112,37 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
     
-    // Fix accordion collapse functionality
-    const accordionButtons = nobleclassicsModal.querySelectorAll('.accordion-button');
-    accordionButtons.forEach(function(btn) {
+    // Custom accordion button handlers - completely bypass Bootstrap's collapse
+    const accordionBtns = nobleclassicsModal.querySelectorAll('.custom-accordion-btn');
+    
+    accordionBtns.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
         
-        const targetId = this.getAttribute('data-bs-target');
-        const targetCollapse = document.querySelector(targetId);
+        const targetId = this.getAttribute('data-target');
+        const targetCollapse = document.getElementById(targetId);
         
         if (targetCollapse) {
-          // Check if it's currently shown
-          const isShown = targetCollapse.classList.contains('show');
+          // Check if currently expanded
+          const isExpanded = !this.classList.contains('collapsed');
           
-          // Close all other collapse elements in this accordion
-          const allCollapse = nobleclassicsModal.querySelectorAll('.accordion-collapse');
-          allCollapse.forEach(function(collapse) {
-            if (collapse !== targetCollapse && collapse.classList.contains('show')) {
-              collapse.classList.remove('show');
-              const relatedBtn = collapse.previousElementSibling;
-              if (relatedBtn && relatedBtn.classList.contains('accordion-button')) {
-                relatedBtn.classList.add('collapsed');
-              }
-            }
+          // Close all accordions first
+          accordionBtns.forEach(function(otherBtn) {
+            otherBtn.classList.add('collapsed');
+            otherBtn.setAttribute('aria-expanded', 'false');
           });
           
-          // Toggle current collapse
-          if (isShown) {
-            targetCollapse.classList.remove('show');
-            this.classList.add('collapsed');
-          } else {
-            targetCollapse.classList.add('show');
+          const allCollapses = nobleclassicsModal.querySelectorAll('.custom-collapse');
+          allCollapses.forEach(function(collapse) {
+            collapse.classList.add('collapsed');
+          });
+          
+          // If it wasn't expanded, expand it now
+          if (!isExpanded) {
             this.classList.remove('collapsed');
+            this.setAttribute('aria-expanded', 'true');
+            targetCollapse.classList.remove('collapsed');
           }
         }
       });
@@ -160,6 +158,17 @@ document.addEventListener('DOMContentLoaded', function() {
       const backdrops = document.querySelectorAll('.modal-backdrop');
       backdrops.forEach(function(backdrop) {
         backdrop.remove();
+      });
+      
+      // Reset accordion states - close all
+      accordionBtns.forEach(function(btn) {
+        btn.classList.add('collapsed');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      
+      const allCollapses = nobleclassicsModal.querySelectorAll('.custom-collapse');
+      allCollapses.forEach(function(collapse) {
+        collapse.classList.add('collapsed');
       });
     });
     
