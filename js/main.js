@@ -73,6 +73,108 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// Fix for Bootstrap Modal and Accordion - prevents JSON parse errors
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the modal element
+  const nobleclassicsModal = document.getElementById('nobleclassicsModal');
+  
+  if (nobleclassicsModal) {
+    // Fix close button (X)
+    const closeBtn = nobleclassicsModal.querySelector('.btn-close');
+    const closeFooterBtn = nobleclassicsModal.querySelector('.modal-footer .btn-secondary');
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const modal = bootstrap.Modal.getInstance(nobleclassicsModal);
+        if (modal) {
+          modal.hide();
+        } else {
+          // If no instance, create one and hide
+          const newModal = new bootstrap.Modal(nobleclassicsModal);
+          newModal.hide();
+        }
+      });
+    }
+    
+    if (closeFooterBtn) {
+      closeFooterBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const modal = bootstrap.Modal.getInstance(nobleclassicsModal);
+        if (modal) {
+          modal.hide();
+        } else {
+          const newModal = new bootstrap.Modal(nobleclassicsModal);
+          newModal.hide();
+        }
+      });
+    }
+    
+    // Fix accordion collapse functionality
+    const accordionButtons = nobleclassicsModal.querySelectorAll('.accordion-button');
+    accordionButtons.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const targetId = this.getAttribute('data-bs-target');
+        const targetCollapse = document.querySelector(targetId);
+        
+        if (targetCollapse) {
+          // Check if it's currently shown
+          const isShown = targetCollapse.classList.contains('show');
+          
+          // Close all other collapse elements in this accordion
+          const allCollapse = nobleclassicsModal.querySelectorAll('.accordion-collapse');
+          allCollapse.forEach(function(collapse) {
+            if (collapse !== targetCollapse && collapse.classList.contains('show')) {
+              collapse.classList.remove('show');
+              const relatedBtn = collapse.previousElementSibling;
+              if (relatedBtn && relatedBtn.classList.contains('accordion-button')) {
+                relatedBtn.classList.add('collapsed');
+              }
+            }
+          });
+          
+          // Toggle current collapse
+          if (isShown) {
+            targetCollapse.classList.remove('show');
+            this.classList.add('collapsed');
+          } else {
+            targetCollapse.classList.add('show');
+            this.classList.remove('collapsed');
+          }
+        }
+      });
+    });
+    
+    // Prevent modal from being stuck open
+    nobleclassicsModal.addEventListener('hidden.bs.modal', function() {
+      document.body.classList.remove('modal-open');
+      document.body.style.removeProperty('overflow');
+      document.body.style.removeProperty('padding-right');
+      
+      // Remove backdrop if exists
+      const backdrops = document.querySelectorAll('.modal-backdrop');
+      backdrops.forEach(function(backdrop) {
+        backdrop.remove();
+      });
+    });
+    
+    // Clean up on backdrop click outside modal
+    nobleclassicsModal.addEventListener('click', function(e) {
+      if (e.target === nobleclassicsModal) {
+        const modal = bootstrap.Modal.getInstance(nobleclassicsModal);
+        if (modal) {
+          modal.hide();
+        }
+      }
+    });
+  }
+});
+
 // Contact form handler with PHP backend
 document.getElementById('contactForm')?.addEventListener('submit', function(e){
   e.preventDefault();
