@@ -4,14 +4,14 @@ AOS.init({
   duration: 800
 });
 
-// Typing Animation for Hero Section with proper formatting
+// Typing Animation for Hero Section with proper text wrapping
 document.addEventListener('DOMContentLoaded', function() {
   const typingText = document.querySelector('.typing-text');
   if (typingText) {
-    const text = "A BSIS student from Camarines Norte State College.\nI'm interested in how software and systems are designed and improved.\nI value accuracy, continuous learning, and doing my best in every project I take on.";
+    // Text without explicit line breaks - will wrap naturally based on container width
+    const text = "A BSIS student from Camarines Norte State College. I'm interested in how software and systems are designed and improved. I value accuracy, continuous learning, and doing my best in every project I take on.";
 
     let charIndex = 0;
-    let isTyping = true;
 
     function type() {
       if (charIndex < text.length) {
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Add pause for punctuation
         const currentChar = text[charIndex - 1];
-        const nextChar = text[charIndex];
         let delay = 50;
 
         if (currentChar === '.' || currentChar === '!' || currentChar === '?') {
@@ -33,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         // Typing complete - hide cursor
         typingText.classList.add('typing-done');
-        isTyping = false;
       }
     }
 
@@ -186,12 +184,6 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e){
 // Set copyright year
 document.getElementById('copyYear').textContent = new Date().getFullYear();
 
-
-
-
-
-
-
 // Simple three.js rotating object for subtle 3D feel
 function initThree(){
   const container = document.getElementById('hero-canvas');
@@ -271,3 +263,4 @@ if (typeof THREE !== 'undefined') {
     }
   });
 }
+
