@@ -39,18 +39,15 @@ body{
 
 /* Typing Animation */
 .typing-container {
-  min-height: 80px;
+  min-height: 120px;
+  margin-top: 0.5rem;
 }
 .typing-text {
-  color: #8b0000;
-  font-weight: 500;
-  overflow: hidden;
-  border-right: 3px solid #8b0000;
-  white-space: nowrap;
-  animation: 
-    typing 3.5s steps(60, end),
-    blink-caret .75s step-end infinite;
-  display: inline-block;
+  color: #c41e3a;
+  font-weight: 400;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  display: block;
   max-width: 100%;
 }
 
@@ -61,14 +58,29 @@ body{
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: #8b0000; }
+  50% { border-color: #c41e3a; }
+}
+
+/* Cursor hides after typing */
+.typing-text.typing-done {
+  border-right: none;
+  animation: none;
 }
 
 /* Responsive typing */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
+  .typing-text {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .typing-container {
+    min-height: 100px;
+  }
   .typing-text {
     font-size: 0.9rem;
-    border-right-width: 2px;
+    line-height: 1.5;
   }
 }
 

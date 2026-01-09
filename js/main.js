@@ -4,26 +4,72 @@ AOS.init({
   duration: 800
 });
 
-// Typing Animation for Hero Section
+// Typing Animation for Hero Section with proper word wrapping
 document.addEventListener('DOMContentLoaded', function() {
   const typingText = document.querySelector('.typing-text');
   if (typingText) {
     const text = "An Undergraduate BSIS student at Camarines Norte State College. Aspiring QA tester in the IT industry — passionate about testing, automation, and delivering reliable software experiences.";
-    let index = 0;
+    
+    // Split text into words for proper wrapping
+    const words = text.split(' ');
+    let wordIndex = 0;
+    let charIndex = 0;
+    let currentWord = '';
+    let isDelaying = false;
     
     function type() {
-      if (index < text.length) {
-        typingText.textContent += text.charAt(index);
-        index++;
-        // Adjust typing speed based on character
-        const delay = text.charAt(index - 1) === '.' ? 300 : 
-                      text.charAt(index - 1) === ',' ? 150 : 50;
-        setTimeout(type, delay);
+      if (wordIndex >= words.length) {
+        // Typing complete - hide cursor
+        typingText.classList.add('typing-done');
+        return;
+      }
+      
+      if (!isDelaying) {
+        currentWord = words[wordIndex];
+        charIndex++;
+        
+        // Build displayed text with proper spacing
+        let displayText = '';
+        for (let i = 0; i <= wordIndex; i++) {
+          displayText += words[i] + (i < words.length - 1 ? ' ' : '');
+        }
+        
+        typingText.textContent = displayText;
+        
+        // Check if we need to break to next line (for long text)
+        if (typingText.scrollWidth > typingText.clientWidth || 
+            typingText.getBoundingClientRect().height > 60) {
+          // Add line break before current word
+          displayText = '';
+          for (let i = 0; i < wordIndex; i++) {
+            displayText += words[i] + ' ';
+          }
+          displayText += '\n' + currentWord;
+          typingText.textContent = displayText;
+        }
+        
+        // Check if current word is complete
+        if (charIndex >= currentWord.length) {
+          wordIndex++;
+          charIndex = 0;
+          
+          // Check for punctuation pauses
+          const punctuation = currentWord.match(/[.,;!?]$/);
+          isDelaying = true;
+          const delay = punctuation ? (punctuation[0] === '.' ? 400 : 200) : 50;
+          
+          setTimeout(() => {
+            isDelaying = false;
+            type();
+          }, delay);
+        } else {
+          setTimeout(type, 50);
+        }
       }
     }
     
     // Start typing after a short delay
-    setTimeout(type, 1000);
+    setTimeout(type, 800);
   }
 });
 
