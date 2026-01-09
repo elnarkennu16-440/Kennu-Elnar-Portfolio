@@ -4,15 +4,34 @@ AOS.init({
   duration: 800
 });
 
-// Contact form handler (mock)
+// Contact form handler with PHP backend
 document.getElementById('contactForm')?.addEventListener('submit', function(e){
   e.preventDefault();
   const status = document.getElementById('contactStatus');
   status.textContent = 'Sending...';
-  setTimeout(()=> {
-    status.textContent = 'Message sent — thank you!';
-    this.reset();
-  }, 900);
+
+  // Create FormData from the form
+  const formData = new FormData(this);
+
+  // Send data to PHP script (using fallback for now)
+  fetch('send_email_fallback.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      status.textContent = 'Message sent — thank you!';
+      e.target.reset();
+    } else {
+      status.textContent = data.message || 'Failed to send message. Please try again.';
+      console.log('Server response:', data); // Debug info
+    }
+  })
+  .catch(error => {
+    status.textContent = 'Failed to send message. Please try again.';
+    console.log('Error:', error);
+  });
 });
 
 // Set copyright year
