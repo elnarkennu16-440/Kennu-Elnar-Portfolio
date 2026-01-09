@@ -4,6 +4,29 @@ AOS.init({
   duration: 800
 });
 
+// Typing Animation for Hero Section
+document.addEventListener('DOMContentLoaded', function() {
+  const typingText = document.querySelector('.typing-text');
+  if (typingText) {
+    const text = "An Undergraduate BSIS student at Camarines Norte State College. Aspiring QA tester in the IT industry — passionate about testing, automation, and delivering reliable software experiences.";
+    let index = 0;
+    
+    function type() {
+      if (index < text.length) {
+        typingText.textContent += text.charAt(index);
+        index++;
+        // Adjust typing speed based on character
+        const delay = text.charAt(index - 1) === '.' ? 300 : 
+                      text.charAt(index - 1) === ',' ? 150 : 50;
+        setTimeout(type, delay);
+      }
+    }
+    
+    // Start typing after a short delay
+    setTimeout(type, 1000);
+  }
+});
+
 // Contact form handler with PHP backend
 document.getElementById('contactForm')?.addEventListener('submit', function(e){
   e.preventDefault();

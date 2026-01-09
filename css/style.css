@@ -19,7 +19,7 @@ body{
 
 /* NAV */
 .navbar{
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, #610808 0%, #011325 50%, #0a1157 100%);
   padding: .8rem 1rem;
   box-shadow: 0 6px 20px rgba(12,12,30,0.12);
 }
@@ -36,6 +36,41 @@ body{
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
 .brand-text{font-weight:600;color: #fff; letter-spacing:0.6px}
+
+/* Typing Animation */
+.typing-container {
+  min-height: 80px;
+}
+.typing-text {
+  color: #8b0000;
+  font-weight: 500;
+  overflow: hidden;
+  border-right: 3px solid #8b0000;
+  white-space: nowrap;
+  animation: 
+    typing 3.5s steps(60, end),
+    blink-caret .75s step-end infinite;
+  display: inline-block;
+  max-width: 100%;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #8b0000; }
+}
+
+/* Responsive typing */
+@media (max-width: 768px) {
+  .typing-text {
+    font-size: 0.9rem;
+    border-right-width: 2px;
+  }
+}
 
 /* HERO */
 .hero-section{
