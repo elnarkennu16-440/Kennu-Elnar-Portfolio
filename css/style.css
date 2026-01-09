@@ -82,6 +82,46 @@ body{
     font-size: 0.9rem;
     line-height: 1.5;
   }
+  .about-section .section-sub {
+    text-align: justify;
+  }
+  .project-card .btn {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .project-card.alt .d-flex {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .project-card.alt .badge {
+    align-self: flex-start;
+  }
+  /* NobleClassics button fix for mobile */
+  #projects .project-card:first-child .d-flex {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  #projects .project-card:first-child .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+  }
+  /* NCAMIS button fix for mobile */
+  #projects .project-card:nth-child(2) .d-flex {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  #projects .project-card:nth-child(2) .btn {
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+  }
 }
 
 /* HERO */
