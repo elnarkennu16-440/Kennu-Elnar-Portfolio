@@ -19,15 +19,21 @@ body{
 
 /* NAV */
 .navbar{
-  background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   padding: .8rem 1rem;
   box-shadow: 0 6px 20px rgba(12,12,30,0.12);
 }
-.logo-box{
-  background: rgba(255,255,255,0.12);
-  width:42px;height:42px;border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;color:#fff;
+.navbar-logo{
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.navbar-logo:hover{
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
 .brand-text{font-weight:600;color: #fff; letter-spacing:0.6px}
 
